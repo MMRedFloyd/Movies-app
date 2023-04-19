@@ -1,0 +1,13 @@
+.containerMini {
+  background-color: #360e10a0;
+  height: auto;
+  min-height: 80vh;
+  margin: 0 2rem;
+
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2rem;
+  padding: 2rem;
+
+  position: relative;
+}

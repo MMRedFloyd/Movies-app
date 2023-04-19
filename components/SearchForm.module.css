@@ -1,0 +1,25 @@
+.inputForm {
+  display: flex;
+  align-items: center;
+}
+
+.inputText {
+  width: 30rem;
+  height: 2.4rem;
+  background-color: #5d181a;
+  border: none;
+  border-radius: 0.3rem;
+  margin: 2rem 2rem 2rem 2rem;
+  outline: none;
+  font-size: 1.8rem;
+  padding: 0 1rem;
+}
+
+.searchBtn {
+  height: 2.4rem;
+  padding: 0 1rem;
+  font-size: 1.4rem;
+  background-color: #5d181a;
+  border-radius: 0.3rem;
+  outline: none;
+}

@@ -1,0 +1,103 @@
+.choosenMovie {
+  display: flex;
+  gap: 5rem;
+}
+
+/* Left side */
+
+.imgbtnsContainer {
+  width: 35rem;
+}
+
+.choosenImage {
+  object-fit: contain;
+  width: 100%;
+  height: auto;
+}
+
+.bookandlike {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 33.8rem;
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+.segment {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 2px solid #200607;
+  width: 40%;
+  padding: 0.4rem 0;
+}
+
+.segment:hover {
+  cursor: pointer;
+}
+
+.action {
+  font-size: 1.4rem;
+}
+
+.logoBelow {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Right side */
+
+.contentFlex {
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+  gap: 1rem;
+}
+
+.headFlex {
+  display: flex;
+  gap: 2rem;
+}
+
+.text {
+  display: flex;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+
+.imdb {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.font {
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.genredur {
+  display: flex;
+  gap: 2rem;
+}
+
+.imdbVotes {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.imdbLogo {
+  width: 2rem;
+  height: 2rem;
+}
+
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+  /* gap: 1rem; */
+}
+
+.help2 {
+  color: #eb5b5e;
+}
