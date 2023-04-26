@@ -13,7 +13,6 @@ export function SearchContextProvider(props) {
   function submitSearch(e) {
     e.preventDefault();
     setSearchTitle(searchRef.current.value);
-    console.log(searchTitle);
     searchRef.current.value = "";
   }
 

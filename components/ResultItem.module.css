@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   width: auto;
-  height: 30rem;
+  height: 31rem;
   padding: 0.8rem;
   cursor: pointer;
   overflow: hidden;
@@ -28,6 +28,10 @@
 .smallInfo {
   max-width: 261px;
   overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
 }
 
 .tyg {
@@ -45,6 +49,7 @@
   font-weight: 500;
   margin: 0;
   padding: 0;
+  color: black;
 }
 
 .icon {
@@ -52,8 +57,11 @@
   height: 3rem;
 }
 
-.containeLikeBook {
+.containerLikeBook {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 0.4rem;
+  padding-left: 0.4rem;
 }

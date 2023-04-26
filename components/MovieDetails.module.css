@@ -6,7 +6,7 @@
 /* Left side */
 
 .imgbtnsContainer {
-  width: 35rem;
+  width: 25rem;
 }
 
 .choosenImage {
@@ -29,7 +29,7 @@
   justify-content: space-evenly;
   align-items: center;
   border: 2px solid #200607;
-  width: 40%;
+  width: 100%;
   padding: 0.4rem 0;
 }
 
@@ -41,10 +41,10 @@
   font-size: 1.4rem;
 }
 
-.logoBelow {
-  width: 3rem;
-  height: 3rem;
-}
+/* .logoBelow {
+  width: 40px;
+  height: 40px;
+} */
 
 /* Right side */
 
@@ -60,10 +60,15 @@
   gap: 2rem;
 }
 
-.text {
+.text,
+.texthelp {
   display: flex;
   font-weight: 500;
   font-size: 1.2rem;
+}
+
+.texthelp {
+  font-size: 1.4rem;
 }
 
 .imdb {
@@ -100,4 +105,5 @@
 
 .help2 {
   color: #eb5b5e;
+  font-size: 1.4rem;
 }

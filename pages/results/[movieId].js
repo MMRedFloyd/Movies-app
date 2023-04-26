@@ -1,3 +1,5 @@
+import Head from "next/head";
+
 import MovieDetails from "../../components/movieDetails";
 import classes from "../../components/movieId.module.css";
 import { useRouter } from "next/router";
@@ -7,6 +9,15 @@ function MovieDetail(props) {
 
   return (
     <>
+      <Head>
+        <title>
+          {props.movie.title} ({props.movie.year})
+        </title>
+        <meta
+          name="description"
+          content="Find a movie to watch with your friends and family!"
+        />
+      </Head>
       <div className={classes.newContainer}>
         <MovieDetails
           id={props.movie.id}
@@ -27,9 +38,7 @@ function MovieDetail(props) {
 
 export async function getServerSideProps(context) {
   const movieId = context.query.movieId;
-  console.log(movieId);
 
-  console.log(123);
   const response = await fetch(
     `https://imdb-api.com/en/API/Title/k_629ie9ew/${movieId}`
   );

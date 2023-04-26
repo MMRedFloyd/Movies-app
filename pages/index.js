@@ -1,16 +1,20 @@
-import { useContext } from "react";
+import Head from "next/head";
 
 import MainContent from "../components/MainContent";
 import LoginForm from "../components/LoginForm";
-import FormContext from "../context/form-context";
 
 function HomePage() {
-  const ctxForm = useContext(FormContext);
-
   return (
     <>
+      <Head>
+        <title>Movies App</title>
+        <meta
+          name="description"
+          content="Find a movie to watch with your friends and family!"
+        />
+      </Head>
       <MainContent />
-      {/* {ctxForm.isVisible && <LoginForm />} */}
+      <LoginForm />
     </>
   );
 }

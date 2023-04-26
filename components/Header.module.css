@@ -18,10 +18,21 @@
   letter-spacing: 4px;
 }
 
+.nodec {
+  text-decoration: none;
+}
+
 .logo {
   height: 6rem;
   width: auto;
-  padding-right: 9rem;
+  /* padding-right: 9rem; */
+}
+
+.welcome {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #ad484a;
 }
 
 .login {
@@ -37,4 +48,10 @@
 .login:hover {
   cursor: pointer;
   background-color: #5d181a;
+}
+
+.icons {
+  width: 25px;
+  height: 25px;
+  /* margin: 15px; */
 }

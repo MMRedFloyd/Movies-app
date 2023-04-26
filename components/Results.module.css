@@ -11,3 +11,8 @@
 
   position: relative;
 }
+
+.link {
+  text-decoration: none;
+  width: 17.5rem;
+}

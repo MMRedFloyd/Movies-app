@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useContext, useState } from "react";
 import ResultItem from "./ResultItem";
 import classes from "./Results.module.css";
-import { useContext } from "react";
 import SearchContext from "../context/search-context";
 import Link from "next/link";
 
@@ -31,14 +30,18 @@ function Results(props) {
     if (searchCtx.searchTitle) {
       fetchMovies();
     }
-    console.log(movies);
   }, [searchCtx.searchTitle]);
 
   return (
     <>
       <div className={classes.containerMini}>
+        <h2>{props.data}</h2>
         {movies.map((movie) => (
-          <Link href={`/results/${movie.id}`} key={movie.id}>
+          <Link
+            className={classes.link}
+            href={`/results/${movie.id}`}
+            key={movie.id}
+          >
             <ResultItem
               key={movie.id}
               id={movie.id}

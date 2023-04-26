@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import classes from "./Modal.module.css";
+import classes from "./Lists.module.css";
 
 function Backdrop(props) {
   return <div className={classes.backdrop} />;
@@ -13,9 +13,9 @@ function ModalOverlay(props) {
   );
 }
 
-function Modal(props) {
+function Lists(props) {
   if (!props.open) return null;
-  const portalElement = document.getElementById("overlays");
+  const portalElement = document.getElementById("lists");
 
   return (
     <>
@@ -28,4 +28,4 @@ function Modal(props) {
   );
 }
 
-export default Modal;
+export default Lists;
