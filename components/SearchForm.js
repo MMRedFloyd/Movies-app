@@ -1,6 +1,4 @@
 import { useContext } from "react";
-// import { Link } from "react-router-dom";
-
 import classes from "./SearchForm.module.css";
 import SearchContext from "../context/search-context";
 
@@ -16,11 +14,9 @@ function SearchForm() {
           placeholder="Search"
           ref={searchCtx.searchRef}
         />
-        {/* <Link to="/details"> */}
         <button type="submit" className={classes.searchBtn}>
           Go
         </button>
-        {/* </Link> */}
       </form>
     </>
   );

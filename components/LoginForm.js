@@ -3,12 +3,10 @@ import Modal from "../components/UI/Modal";
 import { useRef, useContext } from "react";
 import AuthContext from "../context/auth-context";
 import FormContext from "../context/form-context";
-import { useRouter } from "next/router";
 
 function LoginForm(props) {
   const inputName = useRef();
   const inputPass = useRef();
-  const router = useRouter();
 
   const ctx = useContext(AuthContext);
   const ctxForm = useContext(FormContext);

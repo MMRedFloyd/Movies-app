@@ -1,0 +1,64 @@
+.welcome {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #ad484a;
+}
+
+.menu {
+  padding: 0.8rem 1.6rem;
+  border-radius: 5rem;
+  border: none;
+  outline: none;
+  background-color: #823536;
+  font-size: 1rem;
+  font-weight: 600;
+  position: relative;
+}
+
+.text {
+  transition: transform 0.5s ease;
+}
+
+.rotate {
+  transform: rotateX(360deg);
+}
+
+.menu:hover {
+  cursor: pointer;
+  background-color: #5d181a;
+}
+
+.dashboard {
+  width: 10rem;
+  height: auto;
+  background-color: #5d181a;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.2rem;
+  list-style: none;
+
+  cursor: pointer;
+  overflow: hidden;
+
+  position: absolute;
+  top: 80px;
+  right: 64px;
+  z-index: 999;
+}
+
+.link {
+  padding: 1rem;
+  text-decoration: none;
+  color: #ad484a;
+}
+
+.link:hover {
+  background-color: #8887871e;
+}
+
+.logout {
+  color: rgb(193, 28, 28);
+  border-top: 1px solid rgba(78, 76, 76, 0.829);
+}

@@ -1,60 +1,144 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
+import { db, auth, logInWithEmailAndPassword } from "../components/firebase";
+import { doc, getDoc } from "firebase/firestore";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import PropagateLoader from "react-spinners/PropagateLoader";
+
 const AuthContext = React.createContext({
   isLoggedIn: false,
+  loading: true,
   currentAcc: "",
+  userUid: "",
+
   onValidInputs: (enteredName, enteredPass) => {},
   onLogOut: () => {},
 });
 
+const override = {
+  display: "block",
+  borderColor: "#ad484a",
+  position: "fixed",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+};
+
 export function AuthContextProvider(props) {
+  const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [users, setUsers] = useState([]);
   const [currentAcc, setCurrentAcc] = useState("");
+  const [userUid, setUserUid] = useState("");
+
   const router = useRouter();
 
-  useEffect(() => {
-    async function getUsersData(req, res) {
-      const response = await fetch(
-        "https://movies-app-f63b3-default-rtdb.europe-west1.firebasedatabase.app/users.json"
-      );
-      const userData = await response.json();
-      setUsers(userData);
-    }
-    getUsersData();
-  }, []);
+  // useEffect(() => {
+  //   if (loading) {
+  //     // maybe trigger a loading screen
+  //     return;
+  //   }
+  //   if (user) router.push("/results");
+  // }, [user, loading]);
 
   function allowEnter(enteredName, enteredPass) {
-    const currentAccount = Object.values(users).find(
-      (user) => user.username === enteredName
-    );
-
-    setCurrentAcc(currentAccount);
-    if (currentAccount && currentAccount.password.toString() === enteredPass) {
-      setIsLoggedIn(true);
-      router.push("/results");
-    } else {
-      setIsLoggedIn(false);
-      console.log("Nema takog korisnika");
-    }
+    logInWithEmailAndPassword(enteredName, enteredPass)
+      .then(() => {
+        console.log(auth);
+        console.log("user logged in:", auth.currentUser.uid);
+        setUserUid(auth.currentUser.uid);
+        setLoading(true);
+        setIsLoggedIn(true);
+        router.push("/results");
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setIsLoggedIn(false);
+      });
   }
 
+  useEffect(() => {
+    async function getUsername(userUid) {
+      try {
+        const userDocRef = doc(db, "users", userUid);
+        const userDocSnapshot = await getDoc(userDocRef);
+        console.log(userDocSnapshot);
+        if (userDocSnapshot.exists()) {
+          const user = userDocSnapshot.data();
+          setCurrentAcc(user);
+        }
+        // setLoading(false);
+      } catch (err) {
+        console.log(err.message);
+        // setLoading(false);
+      }
+    }
+
+    getUsername(userUid);
+  }, [userUid]);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentAcc(user);
+        setIsLoggedIn(true);
+        setUserUid(user.uid);
+      } else {
+        setCurrentAcc(null);
+        setIsLoggedIn(false);
+        setUserUid("");
+      }
+      setLoading(false);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   function logOut() {
-    setIsLoggedIn(false);
-    setCurrentAcc("");
+    signOut(auth)
+      // we don't care about 'then'
+      // we only care to know if we got
+      // an error for some reason
+      .catch((err) => {
+        console.log(err.message);
+      })
+      // run this code regardless
+      // of if the promise resolves
+      .finally(() => {
+        setIsLoggedIn(false);
+        setCurrentAcc("");
+        setUserUid("");
+        // router.push("/");
+      });
+  }
+
+  // console.log(isLoggedIn, currentAcc, userUid);
+
+  if (loading) {
+    return (
+      <PropagateLoader
+        color="#ad484a"
+        loading={loading}
+        cssOverride={override}
+      />
+    );
   }
 
   return (
     <AuthContext.Provider
       value={{
+        loading: loading,
         isLoggedIn: isLoggedIn,
         onValidInputs: allowEnter,
         currentAcc: currentAcc,
         onLogOut: logOut,
+        userUid: userUid,
       }}
     >
-      {props.children}
+      {!loading && props.children}
     </AuthContext.Provider>
   );
 }

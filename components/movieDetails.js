@@ -11,7 +11,7 @@ function MovieDetails(props) {
   const { isLiked, isBookmarked, addToCollection, removeFromCollection } =
     useCollection(props);
 
-  const formattedVotes = parseInt(props.imdbVotes).toLocaleString("en-US");
+  // const formattedVotes = parseInt(props.imdbVotes).toLocaleString("en-US");
 
   return (
     <>
@@ -68,7 +68,7 @@ function MovieDetails(props) {
           <div className={classes.imdb}>
             <Image className={classes.imdbLogo} src={imdbLogo} alt="iMDB" />
             <p className={classes.font}>{props.imdbRating}</p>
-            <p className={classes.imdbVotes}>({formattedVotes})</p>
+            <p className={classes.imdbVotes}>({props.imdbVotes})</p>
           </div>
 
           <h4 className={classes.flexColumn}>

@@ -15,7 +15,7 @@ function MovieDetail(props) {
         </title>
         <meta
           name="description"
-          content="Find a movie to watch with your friends and family!"
+          content="Find a movie to watch with your friends or family!"
         />
       </Head>
       <div className={classes.newContainer}>
@@ -37,10 +37,12 @@ function MovieDetail(props) {
 }
 
 export async function getServerSideProps(context) {
+  console.log(123);
   const movieId = context.query.movieId;
+  console.log(movieId);
 
   const response = await fetch(
-    `https://imdb-api.com/en/API/Title/k_629ie9ew/${movieId}`
+    `http://www.omdbapi.com/?i=${movieId}&apikey=3551a91`
   );
 
   const data = await response.json();
@@ -50,16 +52,16 @@ export async function getServerSideProps(context) {
   return {
     props: {
       movie: {
-        id: data.id,
-        title: data.title,
-        year: data.year,
-        image: data.image,
-        genre: data.genres,
-        runtime: data.runtimeStr,
-        actors: data.stars,
-        description: data.plot,
-        imdbRating: data.imDbRating,
-        imdbVotes: data.imDbRatingVotes,
+        id: data.imdbID,
+        title: data.Title,
+        year: data.Year,
+        image: data.Poster,
+        genre: data.Genre,
+        runtime: data.Runtime,
+        actors: data.Actors,
+        description: data.Plot,
+        imdbRating: data.imdbRating,
+        imdbVotes: data.imdbVotes,
       },
     },
   };

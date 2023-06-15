@@ -28,13 +28,6 @@
   /* padding-right: 9rem; */
 }
 
-.welcome {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  color: #ad484a;
-}
-
 .login {
   padding: 0.8rem 1.6rem;
   border-radius: 5rem;
@@ -48,10 +41,4 @@
 .login:hover {
   cursor: pointer;
   background-color: #5d181a;
-}
-
-.icons {
-  width: 25px;
-  height: 25px;
-  /* margin: 15px; */
 }

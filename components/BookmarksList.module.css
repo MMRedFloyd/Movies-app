@@ -1,13 +1,12 @@
 .bookmarksList {
-  /* position: absolute; */
-  /* display: none; */
+  display: none;
   z-index: 1;
   margin-top: 4rem;
 
   background-color: #823536;
   width: 25rem;
   height: fit-content;
-  /* left: 0; */
+
   overflow: auto;
 }
 
