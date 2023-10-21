@@ -5,42 +5,15 @@ import { useContext, useEffect, useState } from "react";
 import FormContext from "../context/form-context";
 import Link from "next/link";
 import AuthContext from "@/context/auth-contextMirza";
-import { BsFillBookmarksFill } from "react-icons/bs";
-import { AiFillHeart } from "react-icons/ai";
-import { useRouter } from "next/router";
-import BookmarksList from "./BookmarksList";
-import LikesList from "./LikesList";
-import { base, db } from "./firebase";
-import { getDoc, getDocs, doc } from "firebase/firestore";
 import Menu from "./Menu";
+import { useDispatch } from "react-redux";
 
 function Header(props) {
-  const ctxForm = useContext(FormContext);
   const authCtx = useContext(AuthContext);
-  const router = useRouter();
-  const [showBookmarks, setShowBookmarks] = useState(false);
-  const [showLikes, setShowLikes] = useState(false);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (router.pathname === "/") {
-      authCtx.onLogOut();
-    }
-  }, [router]);
-
-  function displayBookmarks() {
-    setShowBookmarks(true);
-  }
-
-  function hideBookmarks() {
-    setShowBookmarks(false);
-  }
-
-  function displayLikes() {
-    setShowLikes(true);
-  }
-
-  function hideLikes() {
-    setShowLikes(false);
+  function showFormHandler() {
+    dispatch({ type: "show" });
   }
 
   // return (
@@ -94,7 +67,7 @@ function Header(props) {
       </Link>
       {authCtx.isLoggedIn && <Menu />}
       {!authCtx.isLoggedIn && (
-        <button className={classes.login} onClick={ctxForm.onShow}>
+        <button className={classes.login} onClick={showFormHandler}>
           Log In
         </button>
       )}

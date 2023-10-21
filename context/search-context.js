@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useRouter } from "next/router";
 
 const SearchContext = React.createContext({
   searchTitle: "",
@@ -9,10 +10,16 @@ const SearchContext = React.createContext({
 export function SearchContextProvider(props) {
   const searchRef = useRef();
   const [searchTitle, setSearchTitle] = useState("");
+  const router = useRouter();
 
   function submitSearch(e) {
     e.preventDefault();
-    setSearchTitle(searchRef.current.value);
+    const title = searchRef.current.value;
+    setSearchTitle(title);
+    router.push({
+      pathname: "/results",
+      query: { searchTitle: title },
+    });
     searchRef.current.value = "";
   }
 

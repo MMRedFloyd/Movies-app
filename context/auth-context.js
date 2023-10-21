@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 import { db, auth, logInWithEmailAndPassword } from "../components/firebase";
 import { doc, getDoc } from "firebase/firestore";
@@ -14,6 +14,7 @@ const AuthContext = React.createContext({
 
   onValidInputs: (enteredName, enteredPass) => {},
   onLogOut: () => {},
+  loadingFun: () => {},
 });
 
 const override = {
@@ -26,70 +27,82 @@ const override = {
 };
 
 export function AuthContextProvider(props) {
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentAcc, setCurrentAcc] = useState("");
   const [userUid, setUserUid] = useState("");
 
-  const router = useRouter();
-
-  // useEffect(() => {
-  //   if (loading) {
-  //     // maybe trigger a loading screen
-  //     return;
-  //   }
-  //   if (user) router.push("/results");
-  // }, [user, loading]);
+  const setUserInfo = useCallback(async (userUid) => {
+    const userDocRef = doc(db, "users", userUid);
+    const userDocSnapshot = await getDoc(userDocRef);
+    if (userDocSnapshot.exists()) {
+      const user = userDocSnapshot.data();
+      setCurrentAcc(user);
+      setUserUid(userUid);
+      setIsLoggedIn(true);
+      return;
+    }
+    throw new Error(`User doc does not exist for id: ${userUid}`);
+  }, []);
 
   function allowEnter(enteredName, enteredPass) {
+    setLoading(true);
     logInWithEmailAndPassword(enteredName, enteredPass)
+      .then((uid) => {
+        console.log("user logged in:", uid);
+        // return promise from 'setUserInfo'
+        return setUserInfo(uid);
+      })
       .then(() => {
-        console.log(auth);
-        console.log("user logged in:", auth.currentUser.uid);
-        setUserUid(auth.currentUser.uid);
-        setLoading(true);
-        setIsLoggedIn(true);
+        console.log("Logged in! Pushing to /results");
         router.push("/results");
-        setLoading(false);
       })
       .catch((err) => {
         console.log(err.message);
-        setIsLoggedIn(false);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }
 
   useEffect(() => {
-    async function getUsername(userUid) {
-      try {
-        const userDocRef = doc(db, "users", userUid);
-        const userDocSnapshot = await getDoc(userDocRef);
-        console.log(userDocSnapshot);
-        if (userDocSnapshot.exists()) {
-          const user = userDocSnapshot.data();
-          setCurrentAcc(user);
+    async function checkAuthOps() {
+      // unsure if I need to check if this is a promise
+      // but did it anyways, then we await its resolution
+      if (Promise.prototype.isPrototypeOf(auth.operations)) {
+        // wait for operations promise to resolve
+        await auth.operations;
+
+        // get the currentUser data
+        const authUser = auth.currentUser;
+
+        // make sure we have a value
+        if (authUser) {
+          // call setUserInfo with the uid
+          await setUserInfo(authUser.uid).then(() => {
+            console.log("Logged in! Pushing to /results");
+            router.push("/results");
+          });
         }
-        // setLoading(false);
-      } catch (err) {
-        console.log(err.message);
-        // setLoading(false);
       }
+
+      // always setLoading to false when done
+      setLoading(false);
     }
 
-    getUsername(userUid);
-  }, [userUid]);
+    checkAuthOps();
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setCurrentAcc(user);
-        setIsLoggedIn(true);
-        setUserUid(user.uid);
-      } else {
+    const unsubscribe = onAuthStateChanged(auth, function (user) {
+      // check IF no user AND NOT
+      // in a loading state
+      if (!user) {
+        console.log("No user found user:", user);
         setCurrentAcc(null);
         setIsLoggedIn(false);
         setUserUid("");
+        setLoading(false);
       }
-      setLoading(false);
     });
 
     return () => {
@@ -97,28 +110,27 @@ export function AuthContextProvider(props) {
     };
   }, []);
 
+  useEffect(() => {
+    // No user, check if we need to redirect
+    if (!currentAcc && router.pathname !== "/") {
+      router.push("/");
+    }
+  }, [router.pathname, currentAcc]);
+
   function logOut() {
-    signOut(auth)
-      // we don't care about 'then'
-      // we only care to know if we got
-      // an error for some reason
-      .catch((err) => {
-        console.log(err.message);
-      })
-      // run this code regardless
-      // of if the promise resolves
-      .finally(() => {
-        setIsLoggedIn(false);
-        setCurrentAcc("");
-        setUserUid("");
-        // router.push("/");
-      });
+    return signOut(auth).catch((err) => {
+      console.log(err.message);
+    });
   }
 
-  // console.log(isLoggedIn, currentAcc, userUid);
+  function loadingFun() {
+    setLoading(!loading);
+  }
+
+  let content = props.children;
 
   if (loading) {
-    return (
+    content = (
       <PropagateLoader
         color="#ad484a"
         loading={loading}
@@ -136,9 +148,10 @@ export function AuthContextProvider(props) {
         currentAcc: currentAcc,
         onLogOut: logOut,
         userUid: userUid,
+        loadingFun: loadingFun,
       }}
     >
-      {!loading && props.children}
+      {content}
     </AuthContext.Provider>
   );
 }

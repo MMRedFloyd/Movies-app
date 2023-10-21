@@ -2,8 +2,8 @@ import { initializeApp } from "firebase/app";
 import {
   getAuth,
   signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
+  setPersistence,
+  browserLocalPersistence,
 } from "firebase/auth";
 
 import { getFirestore, collection } from "firebase/firestore";
@@ -27,13 +27,13 @@ const base = collection(db, "users");
 
 const logInWithEmailAndPassword = async (email, password) => {
   try {
-    const userCredential = await signInWithEmailAndPassword(
+    const userCredential = await setPersistence(
       auth,
-      email,
-      password
-    );
+      browserLocalPersistence
+    ).then(() => signInWithEmailAndPassword(auth, email, password));
     const userUid = userCredential.user.uid;
     console.log("User ID:", userUid);
+    return userUid;
   } catch (err) {
     console.log(err.message);
     console.log(err.code);
@@ -51,10 +51,6 @@ const logInWithEmailAndPassword = async (email, password) => {
     throw err;
   }
 };
-
-// const logout = () => {
-//   signOut(auth);
-// };
 
 export {
   auth,

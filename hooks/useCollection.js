@@ -86,8 +86,9 @@ export const useCollection = (props) => {
 
     let collectionList = user[collectionType];
     let formatted = Object.values(collectionList);
+    console.log(formatted);
 
-    if (formatted.some((bookmark) => bookmark.id === props.id)) {
+    if (formatted.some((movie) => movie.id === props.id)) {
       formatted = formatted.filter((item) => item.id !== props.id);
 
       const body =

@@ -3,42 +3,18 @@ import AuthContext from "@/context/auth-contextMirza";
 import { useContext, useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "./firebase";
+import SavedContext from "@/context/saved-contextMirza";
 
 function Menu() {
   const [isRotated, setIsRotated] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const authCtx = useContext(AuthContext);
+  const savedCtx = useContext(SavedContext);
   const router = useRouter();
-  const currentAcc = authCtx.userUid;
 
   const currentUsername = authCtx.currentAcc.username;
   const menuRef = useRef();
   const buttonRef = useRef();
-  console.log(currentUsername);
-
-  async function handleBookmarksClick() {
-    try {
-      const bookmarkedMoviesDocRef = doc(db, "users", currentAcc);
-      const bookmarkedMoviesSnapshot = await getDoc(bookmarkedMoviesDocRef);
-      let bookmarkedMovies = [];
-
-      if (bookmarkedMoviesSnapshot.exists()) {
-        const bookmarkedMoviesData = bookmarkedMoviesSnapshot.data();
-        const bookmarkedMovies = bookmarkedMoviesData.bookmarks || [];
-
-        const query = { bookmarkedMovies: JSON.stringify(bookmarkedMovies) };
-        console.log(query);
-        router.push({
-          pathname: "/results",
-          query: query,
-        });
-      }
-    } catch (error) {
-      console.log(error.message);
-    }
-  }
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -89,11 +65,21 @@ function Menu() {
             <Link
               href="/results"
               className={classes.link}
-              onClick={handleBookmarksClick}
+              onClick={() => {
+                savedCtx.handleBookmarksClick();
+                handleMenu();
+              }}
             >
               Bookmarks
             </Link>
-            <Link href="/results" className={classes.link}>
+            <Link
+              href="/results"
+              className={classes.link}
+              onClick={() => {
+                savedCtx.handleLikesClick();
+                handleMenu();
+              }}
+            >
               Likes
             </Link>
             <li

@@ -9,6 +9,7 @@
 
   height: 6rem;
   padding: 0 4rem;
+  position: relative;
 }
 
 .nameofapp {
@@ -23,9 +24,11 @@
 }
 
 .logo {
+  position: absolute;
+  top: 0rem;
+  left: 44rem;
   height: 6rem;
   width: auto;
-  /* padding-right: 9rem; */
 }
 
 .login {
