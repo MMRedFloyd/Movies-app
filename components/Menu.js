@@ -4,15 +4,17 @@ import { useContext, useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import SavedContext from "@/context/saved-contextMirza";
+import { handleBookmarksData, handleLikesData } from "@/store/saved-sliceMirza";
+import { useDispatch } from "react-redux";
 
 function Menu() {
   const [isRotated, setIsRotated] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const authCtx = useContext(AuthContext);
-  const savedCtx = useContext(SavedContext);
-  const router = useRouter();
+  const dispatch = useDispatch();
 
   const currentUsername = authCtx.currentAcc.username;
+  const currentAcc = authCtx.userUid;
   const menuRef = useRef();
   const buttonRef = useRef();
 
@@ -42,6 +44,16 @@ function Menu() {
     setIsOpen(!isOpen);
   }
 
+  function handleBookmarksButton() {
+    console.log("button clicked");
+    dispatch(handleBookmarksData(currentAcc));
+  }
+
+  function handleLikesButton() {
+    console.log("button clicked");
+    dispatch(handleLikesData(currentAcc));
+  }
+
   return (
     <>
       <div className={classes.welcome}>
@@ -66,7 +78,7 @@ function Menu() {
               href="/results"
               className={classes.link}
               onClick={() => {
-                savedCtx.handleBookmarksClick();
+                handleBookmarksButton();
                 handleMenu();
               }}
             >
@@ -76,7 +88,7 @@ function Menu() {
               href="/results"
               className={classes.link}
               onClick={() => {
-                savedCtx.handleLikesClick();
+                handleLikesButton();
                 handleMenu();
               }}
             >

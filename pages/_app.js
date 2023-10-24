@@ -14,11 +14,11 @@ export default function App({ Component, pageProps }) {
       <AuthContextProvider>
         {/* <FormContextProvider> */}
         {/* <SearchContextProvider> */}
-        <SavedContextProvider>
-          <Rootlayout>
-            <Component {...pageProps} />
-          </Rootlayout>
-        </SavedContextProvider>
+        {/* <SavedContextProvider> */}
+        <Rootlayout>
+          <Component {...pageProps} />
+        </Rootlayout>
+        {/* </SavedContextProvider> */}
         {/* </SearchContextProvider> */}
         {/* </FormContextProvider> */}
       </AuthContextProvider>

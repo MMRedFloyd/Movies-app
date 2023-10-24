@@ -1,27 +1,29 @@
 import { useEffect, useContext, useState } from "react";
 import ResultItem from "./ResultItem";
 import classes from "./Results.module.css";
-import SearchContext from "../context/search-context";
 import Link from "next/link";
-import PropagateLoader from "react-spinners/PropagateLoader";
 import Image from "next/image";
 import MovieImage from "../public/watching-a-movie.png";
 import SavedContext from "@/context/saved-contextMirza";
 import AuthContext from "@/context/auth-contextMirza";
 import { useSelector } from "react-redux";
-import Skeleton from "react-loading-skeleton";
+import { savedActions } from "@/store/saved-sliceMirza";
 
 function Results(props) {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(true);
   const [message, setMessage] = useState(true);
-  // const [loadingSkeleton, setLoadingSkeleton] = useState(false);
 
   const searchTitle = useSelector((state) => state.search.searchTitle);
-  // const searchCtx = useContext(SearchContext);
+
   const savedCtx = useContext(SavedContext);
   const authCtx = useContext(AuthContext);
+  const bookmarkShow = useSelector((state) => state.saved.bookmarkShow);
+  const bookmarks = useSelector((state) => state.saved.bookmarks);
+
+  const likeShow = useSelector((state) => state.saved.likeShow);
+  const likes = useSelector((state) => state.saved.likes);
 
   const override = {
     display: "block",
@@ -57,7 +59,7 @@ function Results(props) {
       setLoading(false);
       // setLoadingSkeleton(false);
       setPage(true);
-      savedCtx.hide();
+      dispatch(savedActions.hide());
     }
 
     if (searchTitle) {
@@ -68,7 +70,7 @@ function Results(props) {
   return (
     <>
       <div className={classes.containerMini}>
-        {message && !savedCtx.bookmarkShow && !savedCtx.likeShow && (
+        {message && bookmarkShow && likeShow && (
           <div className={classes.box}>
             <Image
               src={MovieImage}
@@ -88,8 +90,8 @@ function Results(props) {
           />
         )} */}
         {page &&
-          !savedCtx.bookmarkShow &&
-          !savedCtx.likeShow &&
+          bookmarkShow &&
+          likeShow &&
           movies.map((movie) => (
             <Link
               className={classes.link}
@@ -107,8 +109,8 @@ function Results(props) {
               }
             </Link>
           ))}
-        {savedCtx.bookmarkShow &&
-          savedCtx.bookmarks.map((movie) => (
+        {bookmarkShow &&
+          bookmarks.map((movie) => (
             <Link
               className={classes.link}
               href={`/results/${movie.id}`}
@@ -124,8 +126,8 @@ function Results(props) {
             </Link>
           ))}
 
-        {savedCtx.likeShow &&
-          savedCtx.likes.map((movie) => (
+        {likeShow &&
+          likes.map((movie) => (
             <Link
               className={classes.link}
               href={`/results/${movie.id}`}

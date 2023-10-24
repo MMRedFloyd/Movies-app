@@ -1,8 +1,8 @@
-import { useContext, useRef } from "react";
+import { useRef } from "react";
 import classes from "./SearchForm.module.css";
-import SearchContext from "../context/search-context";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
+import { searchActions } from "../store/search-slice";
 
 function SearchForm() {
   const searchRef = useRef(null);
@@ -12,7 +12,7 @@ function SearchForm() {
   function submitSearch(e) {
     e.preventDefault();
     const title = searchRef.current.value;
-    dispatch({ type: "SET_SEARCH_TITLE", payload: title });
+    dispatch(searchActions.setSearchTitle(title));
     router.push({
       pathname: "/results",
       query: { searchTitle: title },

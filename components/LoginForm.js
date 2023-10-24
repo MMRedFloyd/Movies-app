@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { db, logInWithEmailAndPassword } from "./firebase";
 import { useRouter } from "next/router";
 import { doc, getDoc } from "firebase/firestore";
+import { formActions } from "../store/form-slice";
 
 function LoginForm(props) {
   const inputName = useRef();
@@ -17,7 +18,7 @@ function LoginForm(props) {
   const isVisible = useSelector((state) => state.form.isVisible);
 
   function hideFormHandler() {
-    dispatch({ type: "hide" });
+    dispatch(formActions.hideForm());
   }
 
   function loginHandler(e) {

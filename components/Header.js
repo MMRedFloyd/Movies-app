@@ -2,18 +2,18 @@ import Image from "next/image";
 import logo from "../public/logo.png";
 import classes from "./Header.module.css";
 import { useContext, useEffect, useState } from "react";
-import FormContext from "../context/form-context";
 import Link from "next/link";
 import AuthContext from "@/context/auth-contextMirza";
 import Menu from "./Menu";
 import { useDispatch } from "react-redux";
+import { formActions } from "../store/form-slice";
 
 function Header(props) {
   const authCtx = useContext(AuthContext);
   const dispatch = useDispatch();
 
   function showFormHandler() {
-    dispatch({ type: "show" });
+    dispatch(formActions.showForm());
   }
 
   // return (
