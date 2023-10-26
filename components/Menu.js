@@ -1,20 +1,19 @@
 import classes from "../components/Menu.module.css";
-import AuthContext from "@/context/auth-contextMirza";
-import { useContext, useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import SavedContext from "@/context/saved-contextMirza";
 import { handleBookmarksData, handleLikesData } from "@/store/saved-sliceMirza";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { logOut } from "@/store/auth-sliceMirza";
 
 function Menu() {
   const [isRotated, setIsRotated] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const authCtx = useContext(AuthContext);
   const dispatch = useDispatch();
+  const currentUsername = useSelector(
+    (state) => state.auth.currentAcc.username
+  );
+  const currentAcc = useSelector((state) => state.auth.userUid);
 
-  const currentUsername = authCtx.currentAcc.username;
-  const currentAcc = authCtx.userUid;
   const menuRef = useRef();
   const buttonRef = useRef();
 
@@ -96,7 +95,7 @@ function Menu() {
             </Link>
             <li
               className={`${classes.logout} ${classes.link}`}
-              onClick={authCtx.onLogOut}
+              onClick={logOut()}
             >
               Logout
             </li>

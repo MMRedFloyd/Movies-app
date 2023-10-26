@@ -7,13 +7,14 @@ import { db, logInWithEmailAndPassword } from "./firebase";
 import { useRouter } from "next/router";
 import { doc, getDoc } from "firebase/firestore";
 import { formActions } from "../store/form-slice";
+import { allowEnter, authActions } from "@/store/auth-sliceMirza";
 
 function LoginForm(props) {
   const inputName = useRef();
   const inputPass = useRef();
   const router = useRouter();
 
-  const ctx = useContext(AuthContext);
+  // const ctx = useContext(AuthContext);
   const dispatch = useDispatch();
   const isVisible = useSelector((state) => state.form.isVisible);
 
@@ -26,7 +27,8 @@ function LoginForm(props) {
     const enteredName = inputName.current.value;
     const enteredPass = inputPass.current.value;
 
-    ctx.onValidInputs(enteredName, enteredPass);
+    dispatch(allowEnter(enteredName, enteredPass, router));
+    // ctx.onValidInputs(enteredName, enteredPass);
 
     inputName.current.value = "";
     inputPass.current.value = "";

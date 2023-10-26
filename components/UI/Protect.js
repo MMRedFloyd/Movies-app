@@ -1,33 +1,30 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/router";
-import AuthContext from "@/context/auth-contextMirza";
-import FormContext from "@/context/form-contextMirza";
 import HomePage from "@/pagesMirza";
-import { hideForm } from "@/storeMirza";
 import { useDispatch, useSelector } from "react-redux";
+import { formActions } from "@/store/form-sliceMirza";
 
 const protectedRoutes = ["/results", "/results/.+"];
 
 export default function Protect({ children }) {
   const router = useRouter();
-  const authCtx = useContext(AuthContext);
-  // const formCtx = useContext(FormContext);
   const dispatch = useDispatch();
-  const isVisible = useSelector((state) => state.isVisible);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const loading = useSelector((state) => state.auth.loading);
 
   function hideForm() {
-    dispatch({ type: "hide" });
+    dispatch(formActions.hideForm());
   }
 
   const shouldProtect = protectedRoutes.some((p) => router.pathname.match(p));
 
   useEffect(() => {
-    if (!authCtx.isLoggedIn && !authCtx.loading) {
+    if (!isLoggedIn && !loading) {
       hideForm();
     }
-  }, [authCtx.isLoggedIn, authCtx.loading]);
+  }, [isLoggedIn, loading]);
 
-  if (!authCtx.isLoggedIn && !authCtx.loading && shouldProtect) {
+  if (!isLoggedIn && !loading && shouldProtect) {
     return <HomePage />;
   }
 

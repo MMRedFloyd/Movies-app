@@ -1,16 +1,14 @@
 import Image from "next/image";
 import logo from "../public/logo.png";
 import classes from "./Header.module.css";
-import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
-import AuthContext from "@/context/auth-contextMirza";
 import Menu from "./Menu";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { formActions } from "../store/form-slice";
 
 function Header(props) {
-  const authCtx = useContext(AuthContext);
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   function showFormHandler() {
     dispatch(formActions.showForm());
@@ -65,8 +63,8 @@ function Header(props) {
       <Link href="/results">
         <Image className={classes.logo} src={logo} alt="Movies App logo" />
       </Link>
-      {authCtx.isLoggedIn && <Menu />}
-      {!authCtx.isLoggedIn && (
+      {isLoggedIn && <Menu />}
+      {!isLoggedIn && (
         <button className={classes.login} onClick={showFormHandler}>
           Log In
         </button>

@@ -4,9 +4,7 @@ import classes from "./Results.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import MovieImage from "../public/watching-a-movie.png";
-import SavedContext from "@/context/saved-contextMirza";
-import AuthContext from "@/context/auth-contextMirza";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { savedActions } from "@/store/saved-sliceMirza";
 
 function Results(props) {
@@ -14,11 +12,9 @@ function Results(props) {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(true);
   const [message, setMessage] = useState(true);
+  const dispatch = useDispatch();
 
   const searchTitle = useSelector((state) => state.search.searchTitle);
-
-  const savedCtx = useContext(SavedContext);
-  const authCtx = useContext(AuthContext);
   const bookmarkShow = useSelector((state) => state.saved.bookmarkShow);
   const bookmarks = useSelector((state) => state.saved.bookmarks);
 
