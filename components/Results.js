@@ -6,6 +6,7 @@ import Image from "next/image";
 import MovieImage from "../public/watching-a-movie.png";
 import { useDispatch, useSelector } from "react-redux";
 import { savedActions } from "@/store/saved-sliceMirza";
+import Loader from "./UI/Loader";
 
 function Results(props) {
   const [movies, setMovies] = useState([]);
@@ -66,7 +67,7 @@ function Results(props) {
   return (
     <>
       <div className={classes.containerMini}>
-        {message && bookmarkShow && likeShow && (
+        {message && !bookmarkShow && !likeShow && (
           <div className={classes.box}>
             <Image
               src={MovieImage}
@@ -78,16 +79,10 @@ function Results(props) {
             </h1>
           </div>
         )}
-        {/* {loading && (
-          <PropagateLoader
-            color="#ad484a"
-            loading={loading}
-            cssOverride={override}
-          />
-        )} */}
+        {loading && <Loader loading={loading} />}
         {page &&
-          bookmarkShow &&
-          likeShow &&
+          !bookmarkShow &&
+          !likeShow &&
           movies.map((movie) => (
             <Link
               className={classes.link}

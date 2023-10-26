@@ -1,17 +1,18 @@
-import { useState, useEffect, useContext } from "react";
-import AuthContext from "../context/auth-context";
+import { useState, useEffect } from "react";
 import { getDoc, doc, updateDoc } from "firebase/firestore";
 import { db } from "../components/firebase";
+import { useSelector } from "react-redux";
 
 export const useCollection = (props) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [user, setUser] = useState("");
-  const authCtx = useContext(AuthContext);
-  const currentUid = authCtx.userUid;
+
+  const currentAcc = useSelector((state) => state.auth.currentAcc);
+  const currentUid = useSelector((state) => state.auth.userUid);
 
   useEffect(() => {
-    if (authCtx.currentAcc) {
+    if (currentAcc) {
       async function fetchData(currentUid) {
         try {
           const userDocRef = doc(db, "users", currentUid);
@@ -49,7 +50,7 @@ export const useCollection = (props) => {
       }
       fetchData(currentUid);
     }
-  }, [currentUid, props.id, authCtx.currentAcc]);
+  }, [currentUid, props.id, currentAcc]);
 
   const addToCollection = async (e, collectionType) => {
     e.preventDefault();
