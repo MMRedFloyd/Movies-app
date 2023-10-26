@@ -5,7 +5,7 @@ import classes from "../../components/movieId.module.css";
 import SearchForm from "@/components/SearchFormMirza";
 import { useRouter } from "next/router";
 import { useContext } from "react";
-import AuthContext from "@/context/auth-contextMirza";
+// import AuthContext from "@/context/auth-contextMirza";
 
 function MovieDetail(props) {
   const authCtx = useContext(AuthContext);

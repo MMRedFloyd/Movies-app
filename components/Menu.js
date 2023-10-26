@@ -4,6 +4,7 @@ import Link from "next/link";
 import { handleBookmarksData, handleLikesData } from "@/store/saved-sliceMirza";
 import { useDispatch, useSelector } from "react-redux";
 import { logOut } from "@/store/auth-sliceMirza";
+import { useRouter } from "next/router";
 
 function Menu() {
   const [isRotated, setIsRotated] = useState(false);
@@ -13,6 +14,7 @@ function Menu() {
     (state) => state.auth.currentAcc.username
   );
   const currentAcc = useSelector((state) => state.auth.userUid);
+  const router = useRouter();
 
   const menuRef = useRef();
   const buttonRef = useRef();
@@ -95,7 +97,7 @@ function Menu() {
             </Link>
             <li
               className={`${classes.logout} ${classes.link}`}
-              onClick={logOut()}
+              onClick={logOut(router)}
             >
               Logout
             </li>

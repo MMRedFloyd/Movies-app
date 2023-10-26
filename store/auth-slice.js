@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 import { db, auth, logInWithEmailAndPassword } from "../components/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import PropagateLoader from "react-spinners/PropagateLoader";
 
 const initialStateAuth = {
   isLoggedIn: false,
@@ -29,6 +28,7 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
       state.userUid = "";
       state.loading = false;
+      state.setMessage = true;
     },
   },
 });
@@ -84,6 +84,8 @@ export function checkAuthOpsAndUnsubscribe(router) {
           // call setUserInfo with the uid
           const userDocRef = doc(db, "users", authUser.uid);
           const userDocSnapshot = await getDoc(userDocRef);
+
+          console.log(userDocSnapshot.data());
           if (userDocSnapshot.exists()) {
             const user = userDocSnapshot.data();
             dispatch(
@@ -113,6 +115,7 @@ export function checkAuthOpsAndUnsubscribe(router) {
       // in a loading state
       if (!user) {
         console.log("No user found user:", user);
+
         dispatch(authActions.logout());
       } else {
         console.log("user is logged in:", user);
@@ -125,11 +128,13 @@ export function checkAuthOpsAndUnsubscribe(router) {
   };
 }
 
-export function logOut() {
+export function logOut(router) {
   return async () => {
-    return signOut(auth).catch((err) => {
-      console.log(err.message);
-    });
+    return signOut(auth)
+      .then(router.push("/"))
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 }
 

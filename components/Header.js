@@ -5,10 +5,21 @@ import Link from "next/link";
 import Menu from "./Menu";
 import { useDispatch, useSelector } from "react-redux";
 import { formActions } from "../store/form-slice";
+import { authActions } from "@/store/auth-sliceMirza";
+import { startActions } from "@/store/start-sliceMirza";
 
-function Header(props) {
+function Header() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
+  function showWelcome() {
+    dispatch(
+      startActions.manageStartSite({
+        message: true,
+        resultsPage: false,
+      })
+    );
+  }
 
   function showFormHandler() {
     dispatch(formActions.showForm());
@@ -58,10 +69,17 @@ function Header(props) {
   return (
     <header className={classes.navbar}>
       <Link href="/results" className={classes.nodec}>
-        <h3 className={classes.nameofapp}>Movies App</h3>
+        <h3 className={classes.nameofapp} onClick={showWelcome}>
+          Movies App
+        </h3>
       </Link>
       <Link href="/results">
-        <Image className={classes.logo} src={logo} alt="Movies App logo" />
+        <Image
+          className={classes.logo}
+          src={logo}
+          alt="Movies App logo"
+          onClick={showWelcome}
+        />
       </Link>
       {isLoggedIn && <Menu />}
       {!isLoggedIn && (

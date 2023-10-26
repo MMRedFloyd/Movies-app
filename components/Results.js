@@ -7,12 +7,12 @@ import MovieImage from "../public/watching-a-movie.png";
 import { useDispatch, useSelector } from "react-redux";
 import { savedActions } from "@/store/saved-sliceMirza";
 import Loader from "./UI/Loader";
+import { searchActions } from "@/store/search-sliceMirza";
+import { startActions } from "@/store/start-sliceMirza";
 
 function Results(props) {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(true);
-  const [message, setMessage] = useState(true);
   const dispatch = useDispatch();
 
   const searchTitle = useSelector((state) => state.search.searchTitle);
@@ -21,6 +21,10 @@ function Results(props) {
 
   const likeShow = useSelector((state) => state.saved.likeShow);
   const likes = useSelector((state) => state.saved.likes);
+  const message = useSelector((state) => state.start.setMessage);
+  const startPage = useSelector((state) => state.start.resultsPage);
+
+  console.log(message);
 
   const override = {
     display: "block",
@@ -32,11 +36,19 @@ function Results(props) {
   };
 
   useEffect(() => {
+    dispatch(startActions.manageStartSite({ message: true }));
+  }, []);
+
+  useEffect(() => {
     async function fetchMovies() {
-      setMessage(false);
-      setPage(false);
+      dispatch(
+        startActions.manageStartSite({
+          message: false,
+          resultsPage: true,
+        })
+      );
+
       setLoading(true);
-      // setLoadingSkeleton(true);
       const response = await fetch(
         `http://www.omdbapi.com/?s=${searchTitle}&apikey=3551a91`
       );
@@ -54,14 +66,19 @@ function Results(props) {
 
       setMovies(transformedMovies);
       setLoading(false);
-      // setLoadingSkeleton(false);
-      setPage(true);
+      dispatch(
+        startActions.manageStartSite({
+          resultsPage: true,
+        })
+      );
       dispatch(savedActions.hide());
     }
 
     if (searchTitle) {
       fetchMovies();
     }
+
+    dispatch(searchActions.setSearchTitle(""));
   }, [searchTitle]);
 
   return (
@@ -80,7 +97,7 @@ function Results(props) {
           </div>
         )}
         {loading && <Loader loading={loading} />}
-        {page &&
+        {startPage &&
           !bookmarkShow &&
           !likeShow &&
           movies.map((movie) => (
