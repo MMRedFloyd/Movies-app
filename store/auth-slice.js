@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { db, auth, logInWithEmailAndPassword } from "../components/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged, signOut } from "firebase/auth";
+import { startActions } from "./start-slice";
 
 const initialStateAuth = {
   isLoggedIn: false,
@@ -28,7 +29,10 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
       state.userUid = "";
       state.loading = false;
-      state.setMessage = true;
+      state.setMessage = false;
+    },
+    loadingFun() {
+      state.loading = !state.loading;
     },
   },
 });
@@ -36,7 +40,7 @@ const authSlice = createSlice({
 export function allowEnter(enteredName, enteredPass, router) {
   return async (dispatch) => {
     dispatch(authActions.setLoading(true));
-
+    dispatch(startActions.manageStartSite({ message: false }));
     logInWithEmailAndPassword(enteredName, enteredPass)
       .then(async (uid) => {
         console.log("user logged in:", uid);
@@ -50,7 +54,7 @@ export function allowEnter(enteredName, enteredPass, router) {
               userUid: uid,
             })
           );
-          // return;
+          return;
         }
       })
       .then(() => {
@@ -67,8 +71,8 @@ export function allowEnter(enteredName, enteredPass, router) {
 }
 
 export function checkAuthOpsAndUnsubscribe(router) {
-  // console.log(isLoggedIn);
   return async (dispatch) => {
+    // dispatch(authActions.setLoading(true));
     async function checkAuthOps() {
       // unsure if I need to check if this is a promise
       // but did it anyways, then we await its resolution
@@ -81,7 +85,6 @@ export function checkAuthOpsAndUnsubscribe(router) {
 
         // make sure we have a value
         if (authUser) {
-          // call setUserInfo with the uid
           const userDocRef = doc(db, "users", authUser.uid);
           const userDocSnapshot = await getDoc(userDocRef);
 

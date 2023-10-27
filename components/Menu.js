@@ -3,8 +3,9 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { handleBookmarksData, handleLikesData } from "@/store/saved-sliceMirza";
 import { useDispatch, useSelector } from "react-redux";
-import { logOut } from "@/store/auth-sliceMirza";
+import { authActions, logOut } from "@/store/auth-sliceMirza";
 import { useRouter } from "next/router";
+import { startActions } from "@/store/start-sliceMirza";
 
 function Menu() {
   const [isRotated, setIsRotated] = useState(false);
@@ -47,12 +48,18 @@ function Menu() {
 
   function handleBookmarksButton() {
     console.log("button clicked");
+    dispatch(startActions.manageStartSite({ message: false }));
+    dispatch(authActions.setLoading(true));
     dispatch(handleBookmarksData(currentAcc));
+    dispatch(authActions.setLoading(false));
   }
 
   function handleLikesButton() {
     console.log("button clicked");
+    dispatch(startActions.manageStartSite({ message: false }));
+    dispatch(authActions.setLoading(true));
     dispatch(handleLikesData(currentAcc));
+    dispatch(authActions.setLoading(false));
   }
 
   return (

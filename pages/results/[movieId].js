@@ -4,20 +4,20 @@ import MovieDetails from "../../components/movieDetails";
 import classes from "../../components/movieId.module.css";
 import SearchForm from "@/components/SearchFormMirza";
 import { useRouter } from "next/router";
-import { useContext } from "react";
-// import AuthContext from "@/context/auth-contextMirza";
+import { useDispatch } from "react-redux";
+import { authActions } from "@/store/auth-sliceMirza";
 
 function MovieDetail(props) {
-  const authCtx = useContext(AuthContext);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const handleFormSubmit = (searchTitle) => {
-    authCtx.loadingFun();
+    dispatch(authActions.loadingFun());
     router.push({
       pathname: "/results",
       query: { searchTitle },
     });
-    authCtx.loadingFun();
+    dispatch(authActions.loadingFun());
   };
 
   return (

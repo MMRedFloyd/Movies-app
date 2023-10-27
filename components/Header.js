@@ -5,7 +5,6 @@ import Link from "next/link";
 import Menu from "./Menu";
 import { useDispatch, useSelector } from "react-redux";
 import { formActions } from "../store/form-slice";
-import { authActions } from "@/store/auth-sliceMirza";
 import { startActions } from "@/store/start-sliceMirza";
 
 function Header() {

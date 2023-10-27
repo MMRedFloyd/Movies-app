@@ -9,10 +9,10 @@ import { savedActions } from "@/store/saved-sliceMirza";
 import Loader from "./UI/Loader";
 import { searchActions } from "@/store/search-sliceMirza";
 import { startActions } from "@/store/start-sliceMirza";
+import { authActions } from "@/store/auth-sliceMirza";
 
-function Results(props) {
+function Results() {
   const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const searchTitle = useSelector((state) => state.search.searchTitle);
@@ -24,31 +24,23 @@ function Results(props) {
   const message = useSelector((state) => state.start.setMessage);
   const startPage = useSelector((state) => state.start.resultsPage);
 
-  console.log(message);
+  const loading = useSelector((state) => state.auth.loading);
 
-  const override = {
-    display: "block",
-    borderColor: "#ad484a",
-    position: "fixed",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-  };
-
+  // Ovdje je haman po defaultu message na true!!!
   useEffect(() => {
     dispatch(startActions.manageStartSite({ message: true }));
   }, []);
 
   useEffect(() => {
     async function fetchMovies() {
+      dispatch(authActions.setLoading(true));
       dispatch(
         startActions.manageStartSite({
           message: false,
-          resultsPage: true,
+          resultsPage: false,
         })
       );
 
-      setLoading(true);
       const response = await fetch(
         `http://www.omdbapi.com/?s=${searchTitle}&apikey=3551a91`
       );
@@ -65,7 +57,7 @@ function Results(props) {
       });
 
       setMovies(transformedMovies);
-      setLoading(false);
+      // dispatch(authActions.setLoading(false));
       dispatch(
         startActions.manageStartSite({
           resultsPage: true,
@@ -96,7 +88,7 @@ function Results(props) {
             </h1>
           </div>
         )}
-        {loading && <Loader loading={loading} />}
+        {loading && <Loader />}
         {startPage &&
           !bookmarkShow &&
           !likeShow &&
