@@ -34,6 +34,7 @@ function Results() {
   useEffect(() => {
     async function fetchMovies() {
       dispatch(authActions.setLoading(true));
+      console.log(loading);
       dispatch(
         startActions.manageStartSite({
           message: false,
@@ -55,9 +56,12 @@ function Results() {
           image: movieData.Poster,
         };
       });
+      console.log(loading);
 
       setMovies(transformedMovies);
-      // dispatch(authActions.setLoading(false));
+      dispatch(authActions.setLoading(false));
+      console.log(loading);
+
       dispatch(
         startActions.manageStartSite({
           resultsPage: true,
@@ -65,17 +69,17 @@ function Results() {
       );
       dispatch(savedActions.hide());
     }
-
+    console.log(loading);
     if (searchTitle) {
       fetchMovies();
     }
-
     dispatch(searchActions.setSearchTitle(""));
   }, [searchTitle]);
 
   return (
     <>
       <div className={classes.containerMini}>
+        {loading && <Loader />}
         {message && !bookmarkShow && !likeShow && (
           <div className={classes.box}>
             <Image
@@ -88,7 +92,7 @@ function Results() {
             </h1>
           </div>
         )}
-        {loading && <Loader />}
+
         {startPage &&
           !bookmarkShow &&
           !likeShow &&
@@ -110,6 +114,7 @@ function Results() {
             </Link>
           ))}
         {bookmarkShow &&
+          !loading &&
           bookmarks.map((movie) => (
             <Link
               className={classes.link}

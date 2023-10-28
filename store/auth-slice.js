@@ -6,7 +6,7 @@ import { startActions } from "./start-slice";
 
 const initialStateAuth = {
   isLoggedIn: false,
-  loading: true,
+  loading: false,
   currentAcc: "",
   userUid: "",
   error: null,
