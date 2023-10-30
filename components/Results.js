@@ -5,11 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import MovieImage from "../public/watching-a-movie.png";
 import { useDispatch, useSelector } from "react-redux";
-import { savedActions } from "@/store/saved-sliceMirza";
+import { insertLoader, savedActions } from "@/store/saved-sliceMirza";
 import Loader from "./UI/Loader";
 import { searchActions } from "@/store/search-sliceMirza";
 import { startActions } from "@/store/start-sliceMirza";
 import { authActions } from "@/store/auth-sliceMirza";
+import News from "./News";
+import MovieDetails from "./movieDetails";
 
 function Results() {
   const [movies, setMovies] = useState([]);
@@ -34,7 +36,7 @@ function Results() {
   useEffect(() => {
     async function fetchMovies() {
       dispatch(authActions.setLoading(true));
-      console.log(loading);
+
       dispatch(
         startActions.manageStartSite({
           message: false,
@@ -56,97 +58,109 @@ function Results() {
           image: movieData.Poster,
         };
       });
-      console.log(loading);
 
       setMovies(transformedMovies);
-      dispatch(authActions.setLoading(false));
-      console.log(loading);
 
+      dispatch(authActions.setLoading(false));
       dispatch(
         startActions.manageStartSite({
           resultsPage: true,
         })
       );
+
       dispatch(savedActions.hide());
     }
-    console.log(loading);
+
     if (searchTitle) {
       fetchMovies();
     }
+
     dispatch(searchActions.setSearchTitle(""));
   }, [searchTitle]);
 
+  function insertLoader() {
+    dispatch(authActions.setLoading(true));
+    setTimeout(() => {
+      dispatch(authActions.setLoading(false));
+    }, 3000);
+
+    // dispatch(authActions.setLoading(false));
+  }
+
   return (
     <>
-      <div className={classes.containerMini}>
-        {loading && <Loader />}
-        {message && !bookmarkShow && !likeShow && (
-          <div className={classes.box}>
-            <Image
-              src={MovieImage}
-              className={classes.movieimage}
-              alt="Movie image"
-            />
-            <h1 className={classes.movietext}>
-              Search for some movie and enjoy!
-            </h1>
-          </div>
-        )}
-
-        {startPage &&
-          !bookmarkShow &&
-          !likeShow &&
-          movies.map((movie) => (
-            <Link
-              className={classes.link}
-              href={`/results/${movie.id}`}
-              key={movie.id}
-            >
-              {
-                <ResultItem
+      <div className={classes.mainContainer}>
+        <Loader>
+          {message && !bookmarkShow && !likeShow && (
+            // <div className={classes.box}>
+            //   <Image
+            //     src={MovieImage}
+            //     className={classes.movieimage}
+            //     alt="Movie image"
+            //   />
+            //   <h1 className={classes.movietext}>
+            //     Search for some movie and enjoy!
+            //   </h1>
+            // </div>
+            <News />
+          )}
+          <div className={classes.containerMini}>
+            {startPage &&
+              !bookmarkShow &&
+              !likeShow &&
+              movies.map((movie) => (
+                <Link
+                  className={classes.link}
+                  href={`/results/${movie.id}`}
                   key={movie.id}
-                  id={movie.id}
-                  title={movie.title}
-                  year={movie.year}
-                  image={movie.image}
-                />
-              }
-            </Link>
-          ))}
-        {bookmarkShow &&
-          !loading &&
-          bookmarks.map((movie) => (
-            <Link
-              className={classes.link}
-              href={`/results/${movie.id}`}
-              key={movie.id}
-            >
-              <ResultItem
-                key={movie.id}
-                id={movie.id}
-                title={movie.title}
-                year={movie.year}
-                image={movie.image}
-              />
-            </Link>
-          ))}
+                  onClick={insertLoader}
+                >
+                  {
+                    <ResultItem
+                      key={movie.id}
+                      id={movie.id}
+                      title={movie.title}
+                      year={movie.year}
+                      image={movie.image}
+                    />
+                  }
+                </Link>
+              ))}
+            {bookmarkShow &&
+              bookmarks.map((movie) => (
+                <Link
+                  className={classes.link}
+                  href={`/results/${movie.id}`}
+                  key={movie.id}
+                >
+                  <ResultItem
+                    key={movie.id}
+                    id={movie.id}
+                    title={movie.title}
+                    year={movie.year}
+                    image={movie.image}
+                  />
+                </Link>
+              ))}
 
-        {likeShow &&
-          likes.map((movie) => (
-            <Link
-              className={classes.link}
-              href={`/results/${movie.id}`}
-              key={movie.id}
-            >
-              <ResultItem
-                key={movie.id}
-                id={movie.id}
-                title={movie.title}
-                year={movie.year}
-                image={movie.image}
-              />
-            </Link>
-          ))}
+            {likeShow &&
+              likes.map((movie) => (
+                <Link
+                  className={classes.link}
+                  href={`/results/${movie.id}`}
+                  key={movie.id}
+                >
+                  <ResultItem
+                    key={movie.id}
+                    id={movie.id}
+                    title={movie.title}
+                    year={movie.year}
+                    image={movie.image}
+                  />
+                </Link>
+              ))}
+          </div>
+        </Loader>
       </div>
     </>
   );

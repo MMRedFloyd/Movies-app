@@ -1,6 +1,9 @@
 .choosenMovie {
   display: flex;
   gap: 5rem;
+  /* min-height: calc(100vh - 14.4rem);
+  height: auto;
+  margin: 0 2rem 2rem 2rem; */
 }
 
 /* Left side */

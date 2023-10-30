@@ -51,7 +51,6 @@ function Menu() {
     dispatch(startActions.manageStartSite({ message: false }));
     dispatch(authActions.setLoading(true));
     dispatch(handleBookmarksData(currentAcc));
-    dispatch(authActions.setLoading(false));
   }
 
   function handleLikesButton() {
@@ -59,7 +58,6 @@ function Menu() {
     dispatch(startActions.manageStartSite({ message: false }));
     dispatch(authActions.setLoading(true));
     dispatch(handleLikesData(currentAcc));
-    dispatch(authActions.setLoading(false));
   }
 
   return (

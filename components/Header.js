@@ -6,64 +6,46 @@ import Menu from "./Menu";
 import { useDispatch, useSelector } from "react-redux";
 import { formActions } from "../store/form-slice";
 import { startActions } from "@/store/start-sliceMirza";
+import { savedActions } from "@/store/saved-sliceMirza";
+import { authActions } from "@/store/auth-sliceMirza";
 
 function Header() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-  function showWelcome() {
+  // function showWelcome() {
+  //   dispatch(authActions.setLoading(true));
+  //   console.log(loading);
+  //   dispatch(
+  //     startActions.manageStartSite({
+  //       message: true,
+  //       resultsPage: false,
+  //     })
+  //   );
+  //   dispatch(savedActions.hide());
+  //   console.log(loading);
+  //   dispatch(authActions.setLoading(false));
+
+  //   console.log(loading);
+  // }
+
+  async function showWelcome() {
+    dispatch(authActions.setLoading(true));
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    dispatch(savedActions.hide());
     dispatch(
       startActions.manageStartSite({
         message: true,
         resultsPage: false,
       })
     );
+
+    dispatch(authActions.setLoading(false));
   }
 
   function showFormHandler() {
     dispatch(formActions.showForm());
   }
-
-  // return (
-  //   <header className={classes.navbar}>
-  //     <Link href="/results" className={classes.nodec}>
-  //       <h3 className={classes.nameofapp}>Movies App</h3>
-  //     </Link>
-  //     <Link href="/results">
-  //       <Image className={classes.logo} src={logo} alt="Movies App logo" />
-  //     </Link>
-  //     {authCtx.isLoggedIn && (
-  //       <div className={classes.welcome}>
-  //         <h3>Welcome back, {authCtx.currentAcc.username}</h3>
-  //         <BsFillBookmarksFill
-  //           className={classes.icons}
-  //           // onMouseEnter={displayBookmarks}
-  //           // onMouseLeave={hideBookmarks}
-  //         />
-  //         <BookmarksList className={classes.icons} />
-  //         <AiFillHeart
-  //           size={25}
-  //           className={classes.icons}
-  //           onMouseOver={displayLikes}
-  //           onMouseOut={hideLikes}
-  //         />
-  //       </div>
-  //     )}
-  //     {!authCtx.isLoggedIn && (
-  //       <button className={classes.login} onClick={ctxForm.onShow}>
-  //         Log In
-  //       </button>
-  //     )}
-  //     {/* {showBookmarks && (
-  //       <BookmarksList open={showBookmarks} allowEnter={displayBookmarks} />
-  //     )}
-  //     {showLikes && <LikesList open={showLikes} />} */}
-  //   </header>
-  // );
-  // const currentUsername = base
-  //   .doc(user.uid)
-  //   .get()
-  //   .then((doc) => doc.data().username);
 
   return (
     <header className={classes.navbar}>

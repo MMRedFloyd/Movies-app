@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import PropagateLoader from "react-spinners/PropagateLoader";
+import classes from "./LoaderPages.module.css";
 
 let timer;
-export default function Loader({ children }) {
-  const loading = useSelector((state) => state.auth.loading);
+export default function LoaderPages({ children }) {
+  const loading = useSelector((state) => state.start.loaderPages);
   const [visible, setVisible] = useState(loading);
 
   const override = {
@@ -30,7 +31,7 @@ export default function Loader({ children }) {
           clearInterval(timer);
           timer = null;
         }
-      }, 2000);
+      }, 1000);
     }
 
     return () => {
@@ -45,6 +46,12 @@ export default function Loader({ children }) {
   if (!visible) return children;
 
   return (
-    <PropagateLoader color="#ad484a" loading={visible} cssOverride={override} />
+    <div className={classes.loader}>
+      <PropagateLoader
+        color="#ad484a"
+        loading={visible}
+        cssOverride={override}
+      />
+    </div>
   );
 }

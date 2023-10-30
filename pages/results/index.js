@@ -2,6 +2,7 @@ import Head from "next/head";
 
 import SearchForm from "../../components/SearchForm";
 import Results from "../../components/Results";
+import Loader from "@/components/UI/LoaderMirza";
 
 function ResultsPage() {
   return (

@@ -31,7 +31,7 @@ const authSlice = createSlice({
       state.loading = false;
       state.setMessage = false;
     },
-    loadingFun() {
+    loadingFun(state) {
       state.loading = !state.loading;
     },
   },
@@ -39,7 +39,7 @@ const authSlice = createSlice({
 
 export function allowEnter(enteredName, enteredPass, router) {
   return async (dispatch) => {
-    dispatch(authActions.setLoading(true));
+    dispatch(startActions.setLoaderPages(true));
     dispatch(startActions.manageStartSite({ message: false }));
     logInWithEmailAndPassword(enteredName, enteredPass)
       .then(async (uid) => {
@@ -65,7 +65,7 @@ export function allowEnter(enteredName, enteredPass, router) {
         console.log(err.message);
       })
       .finally(() => {
-        dispatch(authActions.setLoading(false));
+        dispatch(startActions.setLoaderPages(false));
       });
   };
 }
@@ -104,7 +104,7 @@ export function checkAuthOpsAndUnsubscribe(router) {
       }
 
       // always setLoading to false when done
-      dispatch(authActions.setLoading(false));
+      dispatch(startActions.setLoaderPages(false));
     }
 
     try {

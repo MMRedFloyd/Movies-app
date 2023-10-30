@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/components/firebaseMirza";
+import { authActions } from "./auth-slice";
 
 const initialStateSaved = {
   bookmarks: [],
@@ -47,6 +48,7 @@ export function handleBookmarksData(currentAcc) {
           })
         );
       }
+      dispatch(authActions.setLoading(false));
     }
 
     try {
@@ -72,6 +74,7 @@ export function handleLikesData(currentAcc) {
           })
         );
       }
+      dispatch(authActions.setLoading(false));
     }
 
     try {

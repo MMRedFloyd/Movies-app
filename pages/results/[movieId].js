@@ -6,6 +6,7 @@ import SearchForm from "@/components/SearchFormMirza";
 import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { authActions } from "@/store/auth-sliceMirza";
+import Loader from "@/components/UI/LoaderMirza";
 
 function MovieDetail(props) {
   const router = useRouter();

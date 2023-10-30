@@ -1,0 +1,37 @@
+.newsContainer {
+  /* background-color: rgb(169, 62, 62); */
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.miniContainer {
+  background-color: rgba(137, 43, 226, 0.522);
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
+}
+
+.imageContainer {
+  width: 70%;
+  max-width: 100%;
+  height: auto;
+  align-self: center;
+}
+
+.image {
+  object-fit: contain;
+  max-width: 100%;
+  height: 100%;
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}

@@ -4,6 +4,7 @@ import Protect from "./UI/Protect";
 import { useDispatch } from "react-redux";
 import { checkAuthOpsAndUnsubscribe } from "@/store/auth-sliceMirza";
 import { useEffect } from "react";
+import LoaderPages from "./UI/LoaderPages";
 
 function Rootlayout(props) {
   const router = useRouter();
@@ -17,7 +18,9 @@ function Rootlayout(props) {
     <>
       <Header />
       <Protect>
-        <div>{props.children}</div>
+        <LoaderPages>
+          <div>{props.children}</div>
+        </LoaderPages>
       </Protect>
     </>
   );

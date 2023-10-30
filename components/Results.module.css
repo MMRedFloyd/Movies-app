@@ -1,11 +1,13 @@
+.mainContainer {
+  min-height: calc(100vh - 14.4rem);
+  height: auto;
+  margin: 0 2rem 2rem 2rem;
+  background-color: #360e1040;
+}
+
 .containerMini {
   /* background-color: #360e10a0; */
-  background-color: #360e1040;
   backdrop-filter: blur(10px);
-
-  height: auto;
-  min-height: 80vh;
-  margin: 0 2rem 2rem 2rem;
 
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -13,6 +15,7 @@
   padding: 2rem;
   justify-items: center;
   align-items: center;
+  height: auto;
 
   position: relative;
 }

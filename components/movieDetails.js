@@ -6,6 +6,7 @@ import { FaBookmark } from "react-icons/fa";
 import { AiOutlineHeart } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
 import { useCollection } from "@/hooks/useCollectionMirza";
+import Loader from "./UI/Loader";
 
 function MovieDetails(props) {
   const { isLiked, isBookmarked, addToCollection, removeFromCollection } =
@@ -16,71 +17,73 @@ function MovieDetails(props) {
   return (
     <>
       <div className={classes.choosenMovie}>
-        <div className={classes.imgbtnsContainer}>
-          <img
-            src={props.image}
-            className={classes.choosenImage}
-            alt="Movie image"
-          />
-          <div className={classes.bookandlike}>
-            <div className={classes.segment}>
-              <span className={classes.action}>Bookmark</span>
-              {!isBookmarked && (
-                <FaRegBookmark
-                  size={30}
-                  onClick={(e) => addToCollection(e, "bookmarks")}
-                />
-              )}
-              {isBookmarked && (
-                <FaBookmark
-                  size={30}
-                  onClick={(e) => removeFromCollection(e, "bookmarks")}
-                />
-              )}
+        <Loader>
+          <div className={classes.imgbtnsContainer}>
+            <img
+              src={props.image}
+              className={classes.choosenImage}
+              alt="Movie image"
+            />
+            <div className={classes.bookandlike}>
+              <div className={classes.segment}>
+                <span className={classes.action}>Bookmark</span>
+                {!isBookmarked && (
+                  <FaRegBookmark
+                    size={30}
+                    onClick={(e) => addToCollection(e, "bookmarks")}
+                  />
+                )}
+                {isBookmarked && (
+                  <FaBookmark
+                    size={30}
+                    onClick={(e) => removeFromCollection(e, "bookmarks")}
+                  />
+                )}
+              </div>
+              <div className={classes.segment}>
+                <span className={classes.action}>Like</span>
+                {!isLiked && (
+                  <AiOutlineHeart
+                    size={30}
+                    onClick={(e) => addToCollection(e, "likes")}
+                  />
+                )}
+                {isLiked && (
+                  <AiFillHeart
+                    size={30}
+                    onClick={(e) => removeFromCollection(e, "likes")}
+                  />
+                )}
+              </div>
             </div>
-            <div className={classes.segment}>
-              <span className={classes.action}>Like</span>
-              {!isLiked && (
-                <AiOutlineHeart
-                  size={30}
-                  onClick={(e) => addToCollection(e, "likes")}
-                />
-              )}
-              {isLiked && (
-                <AiFillHeart
-                  size={30}
-                  onClick={(e) => removeFromCollection(e, "likes")}
-                />
-              )}
+          </div>
+
+          <div className={classes.contentFlex}>
+            <div className={classes.headFlex}>
+              <span className={classes.texthelp}>{props.title}</span>
+              <span className={classes.text}>({props.year})</span>
             </div>
-          </div>
-        </div>
+            <div className={classes.genredur}>
+              <span className={classes.text}>{props.genre}</span>
+              <span className={classes.text}>{props.runtime}</span>
+            </div>
+            <div className={classes.imdb}>
+              <Image className={classes.imdbLogo} src={imdbLogo} alt="iMDB" />
+              <p className={classes.font}>{props.imdbRating}</p>
+              <p className={classes.imdbVotes}>({props.imdbVotes})</p>
+            </div>
 
-        <div className={classes.contentFlex}>
-          <div className={classes.headFlex}>
-            <span className={classes.texthelp}>{props.title}</span>
-            <span className={classes.text}>({props.year})</span>
-          </div>
-          <div className={classes.genredur}>
-            <span className={classes.text}>{props.genre}</span>
-            <span className={classes.text}>{props.runtime}</span>
-          </div>
-          <div className={classes.imdb}>
-            <Image className={classes.imdbLogo} src={imdbLogo} alt="iMDB" />
-            <p className={classes.font}>{props.imdbRating}</p>
-            <p className={classes.imdbVotes}>({props.imdbVotes})</p>
-          </div>
+            <h4 className={classes.flexColumn}>
+              <span className={classes.help2}>Actors</span>
+              <span className={classes.text}>{props.actors}</span>
+            </h4>
 
-          <h4 className={classes.flexColumn}>
-            <span className={classes.help2}>Actors</span>
-            <span className={classes.text}>{props.actors}</span>
-          </h4>
-
-          <h4 className={classes.flexColumn}>
-            <span className={classes.help2}>Plot</span>
-            <span className={classes.text}>{props.description}</span>
-          </h4>
-        </div>
+            <h4 className={classes.flexColumn}>
+              <span className={classes.help2}>Plot</span>
+              <span className={classes.text}>{props.description}</span>
+            </h4>
+          </div>
+        </Loader>
       </div>
     </>
   );

@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialStateStart = {
   setMessage: false,
   resultsPage: false,
+  loaderPages: false,
 };
 
 const startSlice = createSlice({
@@ -12,6 +13,9 @@ const startSlice = createSlice({
     manageStartSite(state, action) {
       state.setMessage = action.payload.message;
       state.resultsPage = action.payload.resultsPage;
+    },
+    setLoaderPages(state, action) {
+      state.loaderPages = action.payload;
     },
   },
 });
