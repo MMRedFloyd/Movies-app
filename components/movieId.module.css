@@ -1,6 +1,7 @@
 .newContainer {
-  /* background-color: #5d181a; */
-  background-color: #360e106d;
+  background-color: #5d181a;
+  /* background-color: #360e106d; */
+  /* background-color: violet; */
   margin: 0 2rem 2rem 2rem;
   height: auto;
   min-height: calc(100vh - 14.4rem);

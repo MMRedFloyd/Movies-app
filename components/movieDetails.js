@@ -7,10 +7,20 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
 import { useCollection } from "@/hooks/useCollectionMirza";
 import Loader from "./UI/Loader";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { authActions } from "@/store/auth-sliceMirza";
+import { startActions } from "@/store/start-sliceMirza";
 
 function MovieDetails(props) {
+  const dispatch = useDispatch();
   const { isLiked, isBookmarked, addToCollection, removeFromCollection } =
     useCollection(props);
+
+  useEffect(() => {
+    dispatch(authActions.setLoading(false));
+    dispatch(startActions.manageStartSite({ message: false }));
+  }, []);
 
   // const formattedVotes = parseInt(props.imdbVotes).toLocaleString("en-US");
 

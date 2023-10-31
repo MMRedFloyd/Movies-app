@@ -80,18 +80,13 @@ function Results() {
 
   function insertLoader() {
     dispatch(authActions.setLoading(true));
-    setTimeout(() => {
-      dispatch(authActions.setLoading(false));
-    }, 3000);
-
-    // dispatch(authActions.setLoading(false));
   }
 
   return (
     <>
       <div className={classes.mainContainer}>
         <Loader>
-          {message && !bookmarkShow && !likeShow && (
+          {message && !bookmarkShow && !likeShow && !startPage && (
             // <div className={classes.box}>
             //   <Image
             //     src={MovieImage}
@@ -132,6 +127,7 @@ function Results() {
                   className={classes.link}
                   href={`/results/${movie.id}`}
                   key={movie.id}
+                  onClick={insertLoader}
                 >
                   <ResultItem
                     key={movie.id}
@@ -149,6 +145,7 @@ function Results() {
                   className={classes.link}
                   href={`/results/${movie.id}`}
                   key={movie.id}
+                  onClick={insertLoader}
                 >
                   <ResultItem
                     key={movie.id}

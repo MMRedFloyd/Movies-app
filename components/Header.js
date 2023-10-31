@@ -33,6 +33,7 @@ function Header() {
     dispatch(authActions.setLoading(true));
     await new Promise((resolve) => setTimeout(resolve, 0));
     dispatch(savedActions.hide());
+    await new Promise((resolve) => setTimeout(resolve, 0));
     dispatch(
       startActions.manageStartSite({
         message: true,
