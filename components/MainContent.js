@@ -13,8 +13,10 @@ function MainContent() {
             alt="Theater image"
           />
         </div>
-        <div>
-          <h1>Movieeees</h1>
+        <div className={classes.slogan}>
+          <h1>Stream.</h1>
+          <h1>Enjoy.</h1>
+          <h1>Repeat!</h1>
         </div>
       </div>
     </>

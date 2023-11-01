@@ -29,39 +29,6 @@ function LoginForm(props) {
     inputPass.current.value = "";
   }
 
-  // const setUserInfo = useCallback(async (userUid) => {
-  //   const userDocRef = doc(db, "users", userUid);
-  //   const userDocSnapshot = await getDoc(userDocRef);
-  //   if (userDocSnapshot.exists()) {
-  //     const user = userDocSnapshot.data();
-  //     dispatch(setCurrentAcc(user));
-  //     dispatch(setUserUid(userUid));
-  //     dispatch(loginSuccess());
-  //     return;
-  //   }
-  //   throw new Error(`User doc does not exist for id: ${userUid}`);
-  // }, []);
-
-  // function onValidInputs(enteredName, enteredPass) {
-  //   dispatch({ type: "LOGIN_START" });
-  //   logInWithEmailAndPassword(enteredName, enteredPass)
-  //     .then((uid) => {
-  //       console.log("user logged in:", uid);
-  //       // return promise from 'setUserInfo'
-  //       return setUserInfo(uid);
-  //     })
-  //     .then(() => {
-  //       console.log("Logged in! Pushing to /results");
-  //       router.push("/results");
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     })
-  //     .finally(() => {
-  //       dispatch({ type: "END" });
-  //     });
-  // }
-
   return (
     <Modal open={isVisible}>
       <form className={classes.form} onSubmit={loginHandler}>
