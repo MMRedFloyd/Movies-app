@@ -13,22 +13,6 @@ function Header() {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
-  // function showWelcome() {
-  //   dispatch(authActions.setLoading(true));
-  //   console.log(loading);
-  //   dispatch(
-  //     startActions.manageStartSite({
-  //       message: true,
-  //       resultsPage: false,
-  //     })
-  //   );
-  //   dispatch(savedActions.hide());
-  //   console.log(loading);
-  //   dispatch(authActions.setLoading(false));
-
-  //   console.log(loading);
-  // }
-
   async function showWelcome() {
     dispatch(authActions.setLoading(true));
     await new Promise((resolve) => setTimeout(resolve, 0));

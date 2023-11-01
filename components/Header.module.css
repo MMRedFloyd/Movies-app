@@ -1,12 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap");
 
 .navbar {
-  background-color: #2f03051f;
+  /* background-color: #2f03051f; */
   backdrop-filter: blur(10px);
-  color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: transparent;
 
   height: 6rem;
   padding: 0 4rem;
@@ -16,7 +16,8 @@
 
 .nameofapp {
   font-size: 2.4rem;
-  color: #823536;
+  /* color: #823536; */
+  color: #f2d2d2;
   font-family: "Great Vibes", sans-serif;
   letter-spacing: 4px;
 }
@@ -38,12 +39,14 @@
   border-radius: 5rem;
   border: none;
   outline: none;
-  background-color: #823536;
+  /* background-color: #823536; */
+  background-color: #f2d2d2;
   font-size: 1rem;
   font-weight: 600;
 }
 
 .login:hover {
   cursor: pointer;
-  background-color: #5d181a;
+  /* background-color: #5d181a; */
+  background-color: #f88f8f;
 }

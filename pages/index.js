@@ -10,7 +10,7 @@ function HomePage() {
         <title>Movies App</title>
         <meta
           name="description"
-          content="Find a movie to watch with your friends and family!"
+          content="Find a movie to watch with your friends and enjoy!"
         />
       </Head>
       <MainContent />
