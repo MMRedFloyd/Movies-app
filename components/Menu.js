@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { authActions, logOut } from "@/store/auth-sliceMirza";
 import { useRouter } from "next/router";
 import { startActions } from "@/store/start-sliceMirza";
+import WidgetsIcon from "@mui/icons-material/Widgets";
 
 function Menu() {
   const [isRotated, setIsRotated] = useState(false);
@@ -65,7 +66,7 @@ function Menu() {
       <div className={classes.welcome}>
         <h3>Welcome back, {currentUsername}</h3>
         <div>
-          <button
+          {/* <button
             className={`${classes.menu}`}
             onMouseEnter={handleRotation}
             onClick={handleMenu}
@@ -76,8 +77,14 @@ function Menu() {
             >
               MENU
             </p>
-          </button>
+          </button> */}
+          <WidgetsIcon
+            sx={{ fontSize: 40 }}
+            ref={buttonRef}
+            onClick={handleMenu}
+          ></WidgetsIcon>
         </div>
+
         {isOpen && (
           <div className={classes.dashboard} ref={menuRef}>
             <Link

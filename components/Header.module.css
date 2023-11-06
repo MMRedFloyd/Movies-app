@@ -6,18 +6,23 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: transparent;
+  /* background-color: transparent; */
 
   height: 6rem;
-  padding: 0 4rem;
+  padding: 0 2rem;
   position: relative;
   z-index: 999;
+}
+
+.logoandname {
+  display: flex;
+  align-items: center;
 }
 
 .nameofapp {
   font-size: 2.4rem;
   /* color: #823536; */
-  color: #f2d2d2;
+  color: #eedadac8;
   font-family: "Great Vibes", sans-serif;
   letter-spacing: 4px;
 }
@@ -27,9 +32,10 @@
 }
 
 .logo {
-  position: absolute;
-  top: 0rem;
-  left: 44rem;
+  /* position: absolute; */
+  /* top: 0rem; */
+  /* left: 44rem; */
+  /* padding-left: 4rem; */
   height: 6rem;
   width: auto;
 }
@@ -40,7 +46,8 @@
   border: none;
   outline: none;
   /* background-color: #823536; */
-  background-color: #f2d2d2;
+  /* background-color: #f2d2d2; */
+  background-color: #eedadac8;
   font-size: 1rem;
   font-weight: 600;
 }

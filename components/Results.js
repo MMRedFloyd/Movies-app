@@ -82,6 +82,21 @@ function Results() {
     dispatch(authActions.setLoading(true));
   }
 
+  // Novi API, možda bolji, isprobat ga za npr. Trending movies ili slike
+
+  // useEffect(() => {
+  //   async function fetchNewMovies() {
+  //     const response = await fetch(
+  //       "https://api.themoviedb.org/3/search/movie?query=batman&page=1&api_key=4e44d9029b1270a757cddc766a1bcb63"
+  //     );
+  //     // "https://api.themoviedb.org/3/movie/157336?api_key=4e44d9029b1270a757cddc766a1bcb63"
+  //     const data = await response.json();
+  //     console.log(data);
+  //   }
+
+  //   fetchNewMovies();
+  // }, []);
+
   return (
     <>
       <div className={classes.mainContainer}>

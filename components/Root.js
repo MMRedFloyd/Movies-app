@@ -17,8 +17,8 @@ function Rootlayout(props) {
   return (
     <>
       <Protect>
+        <Header />
         <LoaderPages>
-          <Header />
           <div>{props.children}</div>
         </LoaderPages>
       </Protect>
